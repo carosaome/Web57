@@ -2,11 +2,11 @@ const express = require('express')
 const commentsController = require('../controller/comments.controller')
 const router = express.Router()
 
-router.get('/', commentsController.get)
+router.get('/:postId', commentsController.get)
 router.post('/', commentsController.post)
-router.put('/:postId/:cmtId', commentsController.updateCmt)
+router.put('/:_id', commentsController.updateCmt)
 // router.get('/:postId', commentsController.getPostById)
 // router.put('/:postId', commentsController.updatePost)
-router.delete('/:postId/:cmtId', commentsController.deleteCmt)
+router.delete('/:_id', commentsController.deleteCmt)
 
 module.exports = router

@@ -1,21 +1,18 @@
-const postModel = require('./posts')
-
+const post = require('../models/posts')
+const comment = require('../models/comments')
 class PostsConstroller{
     async get(req, res){
         try {
-            const allPosts = await postModel.getPosts();
-    
+            const allPosts = await post.find({})
             res.send({ success: 1, data: allPosts })
         } catch (err) {
             res.send({ success: 0, data: null, message: err.message })
         }
     }
     async post(req, res){
-        const { content, createdBy } = req.body;
-
         try {
-            const newPost = await postModel
-                .createPost({ content, createdBy });
+            const item = new post(req.body)
+            const newPost = await item.save()
             res.send({ success: 1, data: newPost })
         } catch (err) {
             res.send({ success: 0, data: null, message: err.message })
@@ -23,10 +20,9 @@ class PostsConstroller{
     }
     async getPostById(req, res){
         try {
-            // path param
-            const { postId } = req.params;
     
-            const foundPost = await postModel.getPost(postId)
+            const foundPost = await post.findById(req.params)
+
     
             res.send({ success: 1, data: foundPost })
         } catch (err) {
@@ -35,11 +31,10 @@ class PostsConstroller{
     }
     async updatePost(req, res){
         try {
-            // path param
-            const { postId } = req.params;
-            const { content } = req.body;
-    
-            await postModel.updatePost({ content, postId })
+           const id = req.params
+           const content = req.body
+            
+           const foundPost = await post.findByIdAndUpdate(id, content)
     
             res.send({ success: 1 })
         } catch (err) {
@@ -48,8 +43,8 @@ class PostsConstroller{
     }
     async deletePost(req, res){
         try {
-            const {postId} = req.params
-            await postModel.deletePost(postId)
+            const id = req.params
+            await post.findByIdAndDelete(id)
             res.send({ success: 1 })
     
         } catch (error) {
@@ -58,8 +53,8 @@ class PostsConstroller{
     }
     async getComments(req, res){
         try {
-            const {postId} = req.params
-            const data = await postModel.getComments(postId)
+            console.log(req.params);
+            const data = await comment.find({postId: req.params})
             res.send({ success: 1, data: data})
     
         } catch (error) {
