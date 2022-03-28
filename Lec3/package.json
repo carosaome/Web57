@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "mongoose": "^6.2.8",
-    "mongose": "0.0.2-security",
     "nodemon": "^2.0.15"
   },
   "scripts": {
