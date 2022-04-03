@@ -5,11 +5,11 @@ const ObjectId = Schema.ObjectId;
 
 const User = new Schema({
     id: ObjectId,
-    userName: {
+    username: {
         type: String,
         require: true,
     },
-    passWord: {
+    password: {
         type: String,
         require: true,
     },
