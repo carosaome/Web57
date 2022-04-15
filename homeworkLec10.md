@@ -71,7 +71,37 @@ Danh sách sản phẩm thuộc danh mục "Quần áo" bán chạy (số lượ
 
 [Nâng cao] Cho từ khoá "khăn quang" (Người dùng nhập từ khăn có dấu còn từ quàng không có dấu), làm thế nào để ra được danh sách các sản phẩm có từ khoá "khăn quàng"
 ```
-        <!-- when user push catogery -->
+        <!-- In Product Model -->
+        const mongoose = require('mongoose')
+const slug = require('mongoose-slug-generator')
+mongoose.plugin(slug)
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
+
+const Products = new Schema({
+    title: String,
+    slugTitle: {type:String, slug:"title", unique:true},
+    description: String,
+    slugDesc: {type:String, slug:"title", unique:true},
+    rating: Number,
+    viewCount: Number,
+    imageUrl: String,
+    tags: [],
+    category: String,
+    price: Number,
+    sellQuantity: Number, // số lượng bán ra
+    stockQuantity: Number // số lượng tồn kho
+}, {
+    timestamps: true,
+}
+);
+
+module.exports = mongoose.model('Products', Products)
+
+
+
+        <!-- Controller -->
+
         const  {keyworkRaw} = req.param
         const  keywork      = slugify(keyworkRaw)
         const  regex        = new RegExp(keywork, i)
