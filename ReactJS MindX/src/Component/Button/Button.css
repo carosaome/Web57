@@ -1,0 +1,8 @@
+.button{
+    border: none;
+    width: 114px;
+    border-radius: 5px;
+    height: 30px;
+    background-image: inherit;
+    color: white;
+  }
